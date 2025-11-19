@@ -75,11 +75,11 @@ export default function Home() {
 								unoptimized
 							/>
 						</div>
-						<h1 className="text-3xl font-bold text-gray-800 mb-2">
+						<h1 className="text-3xl font-bold text-gray-800 mb-10">
 							Welcome Back!
 						</h1>
-						<div className="bg-yellow-100 border-l-4 border-yellow-500 p-4 rounded-lg mb-2">
-							<p className="text-gray-800 font-bold text-lg leading-relaxed">
+						<div className="bg-yellow-100 border-l-4 border-yellow-500 p-4 rounded-lg mb-10">
+							<p className="text-gray-800 font-bold text-2xl leading-relaxed">
 								"Never share your real name, school, or location. Protect it
 								like rare loot from your pack."
 							</p>
@@ -98,22 +98,63 @@ export default function Home() {
 	}
 
 	return (
-		<div className="min-h-screen flex items-center justify-center bg-gray-100">
-			<main className="bg-white p-12 rounded-lg shadow-lg max-w-2xl w-full">
+		<div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-400 via-pink-400 to-yellow-400 animate-gradient relative overflow-hidden">
+			{/* Floating LEGO bricks background */}
+			<div className="absolute inset-0 overflow-hidden pointer-events-none">
+				<div
+					className="absolute top-10 left-10 w-16 h-16 bg-red-500 opacity-20 rounded-lg animate-float-rotate"
+					style={{ animationDelay: "0s" }}
+				></div>
+				<div
+					className="absolute top-1/4 right-20 w-12 h-12 bg-blue-500 opacity-20 rounded-lg animate-spin-slow"
+					style={{ animationDelay: "1s" }}
+				></div>
+				<div
+					className="absolute bottom-1/4 left-1/4 w-20 h-20 bg-yellow-500 opacity-20 rounded-lg animate-float"
+					style={{ animationDelay: "2s" }}
+				></div>
+				<div
+					className="absolute top-1/2 right-1/3 w-14 h-14 bg-green-500 opacity-20 rounded-lg animate-bounce-subtle"
+					style={{ animationDelay: "1.5s" }}
+				></div>
+				<div
+					className="absolute bottom-10 right-10 w-16 h-16 bg-purple-500 opacity-20 rounded-lg animate-float-rotate"
+					style={{ animationDelay: "0.5s" }}
+				></div>
+				<div
+					className="absolute top-1/3 left-1/2 w-10 h-10 bg-pink-500 opacity-20 rounded-lg animate-spin-slow"
+					style={{ animationDelay: "2.5s" }}
+				></div>
+				<div
+					className="absolute top-20 right-1/4 w-14 h-14 bg-orange-500 opacity-20 rounded-lg animate-float"
+					style={{ animationDelay: "0.8s" }}
+				></div>
+				<div
+					className="absolute bottom-1/3 right-1/2 w-12 h-12 bg-teal-500 opacity-20 rounded-lg animate-bounce-subtle"
+					style={{ animationDelay: "1.8s" }}
+				></div>
+				<div
+					className="absolute top-2/3 left-20 w-16 h-16 bg-indigo-500 opacity-20 rounded-lg animate-float-rotate"
+					style={{ animationDelay: "2.2s" }}
+				></div>
+				<div
+					className="absolute bottom-20 left-1/3 w-10 h-10 bg-cyan-500 opacity-20 rounded-lg animate-spin-slow"
+					style={{ animationDelay: "3s" }}
+				></div>
+			</div>
+			<main className="bg-white p-12 rounded-lg shadow-2xl max-w-2xl w-full relative z-10">
 				<div className="flex justify-center mb-6">
 					<Image
 						src="/LEGO_Fortnite_logo.svg"
 						alt="LEGO Fortnite"
 						width={300}
 						height={100}
-						className="object-contain"
+						className="object-contain animate-pulse-scale"
 					/>
 				</div>
-				<h1 className="text-2xl font-bold text-center mb-2">Image OTP</h1>
-				<p className="text-gray-600 text-center mb-6">
-					Click the images in sequence to enter your code
-				</p>
-
+				<h1 className="text-4xl font-bold text-center mb-10 mt-6">
+					Enter your secret
+				</h1>
 				{/* Success/Error Message */}
 				{message && (
 					<div
@@ -126,20 +167,19 @@ export default function Home() {
 						{message}
 					</div>
 				)}
-
 				{/* OTP Display */}
-				<div className="flex justify-center gap-2 mb-8">
+				<div className="flex justify-center gap-3 mb-15">
 					{Array.from({ length: maxLength }).map((_, index) => (
 						<div
 							key={index}
-							className="w-12 h-12 border-2 border-gray-300 rounded-lg flex items-center justify-center text-xl font-semibold overflow-hidden"
+							className="w-20 h-20 border-2 border-gray-300 rounded-lg flex items-center justify-center text-xl font-semibold overflow-hidden"
 						>
 							{code[index] !== undefined ? (
 								<Image
 									src={minifigImages[code[index]]}
 									alt={`Selected ${code[index]}`}
-									width={48}
-									height={48}
+									width={80}
+									height={80}
 									className="rounded-lg object-cover w-full h-full"
 								/>
 							) : (
@@ -147,13 +187,12 @@ export default function Home() {
 							)}
 						</div>
 					))}
-				</div>
-
+				</div>{" "}
 				{/* Image Grid */}
-				<div className="grid grid-cols-3 gap-4 mb-6 justify-items-center">
+				<div className="grid grid-cols-3 gap-4 mb-6 justify-items-center mb-15">
 					<button
 						onClick={() => handleImageClick(1)}
-						className="focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-full w-[100px] h-[100px]"
+						className="focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-full w-[100px] h-[100px] hover:scale-110 active:scale-95 transition-transform duration-200"
 						disabled={code.length >= maxLength}
 						aria-label="1"
 					>
@@ -168,7 +207,7 @@ export default function Home() {
 					</button>
 					<button
 						onClick={() => handleImageClick(2)}
-						className="focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-full w-[100px] h-[100px]"
+						className="focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-full w-[100px] h-[100px] hover:scale-110 active:scale-95 transition-transform duration-200"
 						disabled={code.length >= maxLength}
 						aria-label="2"
 					>
@@ -182,7 +221,7 @@ export default function Home() {
 					</button>
 					<button
 						onClick={() => handleImageClick(3)}
-						className="focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-full w-[100px] h-[100px]"
+						className="focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-full w-[100px] h-[100px] hover:scale-110 active:scale-95 transition-transform duration-200"
 						disabled={code.length >= maxLength}
 						aria-label="3"
 					>
@@ -196,7 +235,7 @@ export default function Home() {
 					</button>
 					<button
 						onClick={() => handleImageClick(4)}
-						className="focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-full w-[100px] h-[100px]"
+						className="focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-full w-[100px] h-[100px] hover:scale-110 active:scale-95 transition-transform duration-200"
 						disabled={code.length >= maxLength}
 						aria-label="4"
 					>
@@ -210,7 +249,7 @@ export default function Home() {
 					</button>
 					<button
 						onClick={() => handleImageClick(5)}
-						className="focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-full w-[100px] h-[100px]"
+						className="focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-full w-[100px] h-[100px] hover:scale-110 active:scale-95 transition-transform duration-200"
 						disabled={code.length >= maxLength}
 						aria-label="5"
 					>
@@ -224,7 +263,7 @@ export default function Home() {
 					</button>
 					<button
 						onClick={() => handleImageClick(6)}
-						className="focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-full w-[100px] h-[100px]"
+						className="focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-full w-[100px] h-[100px] hover:scale-110 active:scale-95 transition-transform duration-200"
 						disabled={code.length >= maxLength}
 						aria-label="6"
 					>
@@ -237,19 +276,18 @@ export default function Home() {
 						/>
 					</button>
 				</div>
-
 				{/* Action Buttons */}
 				<div className="flex gap-3">
 					<button
 						onClick={handleClear}
-						className="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-3 px-4 rounded-lg transition-colors"
+						className="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-3 px-4 rounded-lg transition-all hover:scale-105 active:scale-95"
 					>
 						Clear
 					</button>
 					<button
 						onClick={handleSubmit}
 						disabled={code.length !== maxLength}
-						className="flex-1 bg-blue-500 hover:bg-blue-600 disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-semibold py-3 px-4 rounded-lg transition-colors"
+						className="flex-1 bg-blue-500 hover:bg-blue-600 disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-semibold py-3 px-4 rounded-lg transition-all hover:scale-105 active:scale-95"
 					>
 						Submit
 					</button>
