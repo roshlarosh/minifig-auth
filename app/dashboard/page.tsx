@@ -1,5 +1,4 @@
 "use client";
-import { log } from "console";
 import Image from "next/image";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
@@ -17,6 +16,7 @@ export default function Dashboard() {
 			id: "fortnite",
 			logo: "/LEGO_Fortnite_logo.svg",
 			name: "LEGO Fortnite",
+			tip: "fortnite",
 			enabled: true,
 			images: [
 				"/banana-boy.png",
@@ -28,8 +28,24 @@ export default function Dashboard() {
 			],
 		},
 		{
+			id: "star-wars",
+			logo: "/LEGO_star_wars.jpg",
+			name: "LEGO Star Wars",
+			tip: "star-wars",
+			enabled: true,
+			images: [
+				"/princess-lea.png",
+				"/r2d2.png",
+				"/obi-wan.png",
+				"/c3p0.png",
+				"/darth-veder.png",
+				"/yoda.png",
+			],
+		},
+		{
 			id: "disney",
 			logo: "/LEGO_Disney.svg",
+			tip: "disney",
 			name: "LEGO Disney",
 			enabled: false,
 			images: [],
@@ -37,6 +53,7 @@ export default function Dashboard() {
 		{
 			id: "city",
 			logo: "/LEGO_City.jpg",
+			tip: "city",
 			name: "LEGO City",
 			enabled: false,
 			images: [],
@@ -171,14 +188,23 @@ export default function Dashboard() {
 							)}
 						</div>
 					</div>
-
 					{/* Security Facts */}
-					<div className="bg-yellow-100 border-l-4 border-yellow-500 p-4 rounded-lg mb-2 mt-4 mb-10">
-						<p className="text-gray-800 font-bold text-2xl leading-relaxed">
-							"Fortify your defenses with Fortnite! Select us to ensure your
-							account is as secure"
-						</p>
-					</div>
+					{selectedTheme === "fortnite" ? (
+						<div className="bg-yellow-100 border-l-4 border-yellow-500 p-4 rounded-lg mb-2 mt-4 mb-10">
+							<p className="text-gray-800 font-bold text-2xl leading-relaxed">
+								"Fortify your defenses with Fortnite! Select us to ensure your
+								account is as secure"
+							</p>
+						</div>
+					) : (
+						<div className="bg-yellow-100 border-l-4 border-yellow-500 p-4 rounded-lg mb-2 mt-4 mb-10">
+							<p className="text-gray-800 font-bold text-2xl leading-relaxed">
+								“The Force is strong with those who protect their secrets. Keep
+								your passwords safe and private, young ones—never share them,
+								not even with a droid or close friend!”
+							</p>
+						</div>
+					)}
 
 					{/* Action Buttons */}
 					<div className="mt-8 flex gap-4">
