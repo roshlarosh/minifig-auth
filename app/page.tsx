@@ -6,18 +6,48 @@ export default function Home() {
 	const [code, setCode] = useState<number[]>([]);
 	const [message, setMessage] = useState<string>("");
 	const [isSuccess, setIsSuccess] = useState<boolean>(false);
+	const [currentTheme, setCurrentTheme] = useState<string>("fortnite");
 	const maxLength = 6;
 	const correctOTP = [1, 2, 3, 4, 5, 1]; // Demo OTP: 123451
 
-	const minifigImages = [
-		"",
-		"/banana-boy.png",
-		"/black-cat.png",
-		"/blond-cowboy.png",
-		"/burger-head.png",
-		"/pink-mush.png",
-		"/spiky-head.png",
-	];
+	const themeConfig: Record<string, { images: string[]; logo: string }> = {
+		fortnite: {
+			images: [
+				"",
+				"/banana-boy.png",
+				"/black-cat.png",
+				"/blond-cowboy.png",
+				"/burger-head.png",
+				"/pink-mush.png",
+				"/spiky-head.png",
+			],
+			logo: "/LEGO_Fortnite_logo.svg",
+		},
+		"star-wars": {
+			images: [
+				"",
+				"/princess-lea.png",
+				"/r2d2.png",
+				"/obi-wan.png",
+				"/c3p0.png",
+				"/darth-veder.png",
+				"/yoda.png",
+			],
+			logo: "/LEGO_star_wars.jpg",
+		},
+	};
+
+	const minifigImages =
+		themeConfig[currentTheme]?.images || themeConfig.fortnite.images;
+	const themeLogo =
+		themeConfig[currentTheme]?.logo || themeConfig.fortnite.logo;
+
+	useEffect(() => {
+		const savedTheme = localStorage.getItem("mfa-theme");
+		if (savedTheme && themeConfig[savedTheme]) {
+			setCurrentTheme(savedTheme);
+		}
+	}, []);
 
 	useEffect(() => {
 		if (isSuccess) {
@@ -98,55 +128,81 @@ export default function Home() {
 	}
 
 	return (
-		<div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-400 via-pink-400 to-yellow-400 animate-gradient relative overflow-hidden">
-			{/* Floating LEGO bricks background */}
-			<div className="absolute inset-0 overflow-hidden pointer-events-none">
-				<div
-					className="absolute top-10 left-10 w-16 h-16 bg-red-500 opacity-20 rounded-lg animate-float-rotate"
-					style={{ animationDelay: "0s" }}
-				></div>
-				<div
-					className="absolute top-1/4 right-20 w-12 h-12 bg-blue-500 opacity-20 rounded-lg animate-spin-slow"
-					style={{ animationDelay: "1s" }}
-				></div>
-				<div
-					className="absolute bottom-1/4 left-1/4 w-20 h-20 bg-yellow-500 opacity-20 rounded-lg animate-float"
-					style={{ animationDelay: "2s" }}
-				></div>
-				<div
-					className="absolute top-1/2 right-1/3 w-14 h-14 bg-green-500 opacity-20 rounded-lg animate-bounce-subtle"
-					style={{ animationDelay: "1.5s" }}
-				></div>
-				<div
-					className="absolute bottom-10 right-10 w-16 h-16 bg-purple-500 opacity-20 rounded-lg animate-float-rotate"
-					style={{ animationDelay: "0.5s" }}
-				></div>
-				<div
-					className="absolute top-1/3 left-1/2 w-10 h-10 bg-pink-500 opacity-20 rounded-lg animate-spin-slow"
-					style={{ animationDelay: "2.5s" }}
-				></div>
-				<div
-					className="absolute top-20 right-1/4 w-14 h-14 bg-orange-500 opacity-20 rounded-lg animate-float"
-					style={{ animationDelay: "0.8s" }}
-				></div>
-				<div
-					className="absolute bottom-1/3 right-1/2 w-12 h-12 bg-teal-500 opacity-20 rounded-lg animate-bounce-subtle"
-					style={{ animationDelay: "1.8s" }}
-				></div>
-				<div
-					className="absolute top-2/3 left-20 w-16 h-16 bg-indigo-500 opacity-20 rounded-lg animate-float-rotate"
-					style={{ animationDelay: "2.2s" }}
-				></div>
-				<div
-					className="absolute bottom-20 left-1/3 w-10 h-10 bg-cyan-500 opacity-20 rounded-lg animate-spin-slow"
-					style={{ animationDelay: "3s" }}
-				></div>
-			</div>
+		<div
+			className={`min-h-screen flex items-center justify-center relative overflow-hidden ${
+				currentTheme === "star-wars"
+					? "hyperspace-bg"
+					: "bg-gradient-to-br from-purple-400 via-pink-400 to-yellow-400 animate-gradient"
+			}`}
+		>
+			{/* Star Wars Hyperspace Effect */}
+			{currentTheme === "star-wars" ? (
+				<div className="absolute inset-0 overflow-hidden pointer-events-none">
+					{[...Array(100)].map((_, i) => (
+						<div
+							key={i}
+							className="star"
+							style={{
+								left: `${Math.random() * 100}%`,
+								top: `${Math.random() * 100}%`,
+								width: `${Math.random() * 3 + 2}px`,
+								height: `${Math.random() * 60 + 30}px`,
+								animationDelay: `${Math.random() * 4}s`,
+								animationDuration: `${Math.random() * 2 + 3}s`,
+							}}
+						/>
+					))}
+				</div>
+			) : (
+				/* Floating LEGO bricks background for Fortnite */
+				<div className="absolute inset-0 overflow-hidden pointer-events-none">
+					<div
+						className="absolute top-10 left-10 w-16 h-16 bg-red-500 opacity-20 rounded-lg animate-float-rotate"
+						style={{ animationDelay: "0s" }}
+					></div>
+					<div
+						className="absolute top-1/4 right-20 w-12 h-12 bg-blue-500 opacity-20 rounded-lg animate-spin-slow"
+						style={{ animationDelay: "1s" }}
+					></div>
+					<div
+						className="absolute bottom-1/4 left-1/4 w-20 h-20 bg-yellow-500 opacity-20 rounded-lg animate-float"
+						style={{ animationDelay: "2s" }}
+					></div>
+					<div
+						className="absolute top-1/2 right-1/3 w-14 h-14 bg-green-500 opacity-20 rounded-lg animate-bounce-subtle"
+						style={{ animationDelay: "1.5s" }}
+					></div>
+					<div
+						className="absolute bottom-10 right-10 w-16 h-16 bg-purple-500 opacity-20 rounded-lg animate-float-rotate"
+						style={{ animationDelay: "0.5s" }}
+					></div>
+					<div
+						className="absolute top-1/3 left-1/2 w-10 h-10 bg-pink-500 opacity-20 rounded-lg animate-spin-slow"
+						style={{ animationDelay: "2.5s" }}
+					></div>
+					<div
+						className="absolute top-20 right-1/4 w-14 h-14 bg-orange-500 opacity-20 rounded-lg animate-float"
+						style={{ animationDelay: "0.8s" }}
+					></div>
+					<div
+						className="absolute bottom-1/3 right-1/2 w-12 h-12 bg-teal-500 opacity-20 rounded-lg animate-bounce-subtle"
+						style={{ animationDelay: "1.8s" }}
+					></div>
+					<div
+						className="absolute top-2/3 left-20 w-16 h-16 bg-indigo-500 opacity-20 rounded-lg animate-float-rotate"
+						style={{ animationDelay: "2.2s" }}
+					></div>
+					<div
+						className="absolute bottom-20 left-1/3 w-10 h-10 bg-cyan-500 opacity-20 rounded-lg animate-spin-slow"
+						style={{ animationDelay: "3s" }}
+					></div>
+				</div>
+			)}
 			<main className="bg-white p-12 rounded-lg shadow-2xl max-w-2xl w-full relative z-10">
 				<div className="flex justify-center mb-6">
 					<Image
-						src="/LEGO_Fortnite_logo.svg"
-						alt="LEGO Fortnite"
+						src={themeLogo}
+						alt="Theme Logo"
 						width={300}
 						height={100}
 						className="object-contain animate-pulse-scale"
@@ -190,91 +246,23 @@ export default function Home() {
 				</div>{" "}
 				{/* Image Grid */}
 				<div className="grid grid-cols-3 gap-4 mb-6 justify-items-center mb-15">
-					<button
-						onClick={() => handleImageClick(1)}
-						className="focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-full w-[100px] h-[100px] hover:scale-110 active:scale-95 transition-transform duration-200"
-						disabled={code.length >= maxLength}
-						aria-label="1"
-					>
-						<Image
-							src="/banana-boy.png"
-							alt=""
-							width={100}
-							height={100}
-							className="rounded-full object-cover hover:opacity-80 transition-opacity cursor-pointer w-full h-full"
-							alt=""
-						/>
-					</button>
-					<button
-						onClick={() => handleImageClick(2)}
-						className="focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-full w-[100px] h-[100px] hover:scale-110 active:scale-95 transition-transform duration-200"
-						disabled={code.length >= maxLength}
-						aria-label="2"
-					>
-						<Image
-							src="/black-cat.png"
-							alt=""
-							width={100}
-							height={100}
-							className="rounded-full object-cover hover:opacity-80 transition-opacity cursor-pointer w-full h-full"
-						/>
-					</button>
-					<button
-						onClick={() => handleImageClick(3)}
-						className="focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-full w-[100px] h-[100px] hover:scale-110 active:scale-95 transition-transform duration-200"
-						disabled={code.length >= maxLength}
-						aria-label="3"
-					>
-						<Image
-							src="/blond-cowboy.png"
-							alt=""
-							width={100}
-							height={100}
-							className="rounded-full object-cover hover:opacity-80 transition-opacity cursor-pointer w-full h-full"
-						/>
-					</button>
-					<button
-						onClick={() => handleImageClick(4)}
-						className="focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-full w-[100px] h-[100px] hover:scale-110 active:scale-95 transition-transform duration-200"
-						disabled={code.length >= maxLength}
-						aria-label="4"
-					>
-						<Image
-							src="/burger-head.png"
-							alt=""
-							width={100}
-							height={100}
-							className="rounded-full object-cover hover:opacity-80 transition-opacity cursor-pointer w-full h-full"
-						/>
-					</button>
-					<button
-						onClick={() => handleImageClick(5)}
-						className="focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-full w-[100px] h-[100px] hover:scale-110 active:scale-95 transition-transform duration-200"
-						disabled={code.length >= maxLength}
-						aria-label="5"
-					>
-						<Image
-							src="/pink-mush.png"
-							alt=""
-							width={100}
-							height={100}
-							className="rounded-full object-cover hover:opacity-80 transition-opacity cursor-pointer w-full h-full"
-						/>
-					</button>
-					<button
-						onClick={() => handleImageClick(6)}
-						className="focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-full w-[100px] h-[100px] hover:scale-110 active:scale-95 transition-transform duration-200"
-						disabled={code.length >= maxLength}
-						aria-label="6"
-					>
-						<Image
-							src="/spiky-head.png"
-							alt=""
-							width={100}
-							height={100}
-							className="rounded-full object-cover hover:opacity-80 transition-opacity cursor-pointer w-full h-full"
-						/>
-					</button>
+					{minifigImages.slice(1).map((img, index) => (
+						<button
+							key={index}
+							onClick={() => handleImageClick(index + 1)}
+							className="focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-full w-[100px] h-[100px] hover:scale-110 active:scale-95 transition-transform duration-200"
+							disabled={code.length >= maxLength}
+							aria-label={`${index + 1}`}
+						>
+							<Image
+								src={img}
+								alt=""
+								width={100}
+								height={100}
+								className="rounded-full object-cover hover:opacity-80 transition-opacity cursor-pointer w-full h-full"
+							/>
+						</button>
+					))}
 				</div>
 				{/* Action Buttons */}
 				<div className="flex gap-3">

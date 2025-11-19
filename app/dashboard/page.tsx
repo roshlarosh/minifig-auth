@@ -8,6 +8,7 @@ export default function Dashboard() {
 	const router = useRouter();
 
 	const handleSaveChanges = () => {
+		localStorage.setItem("mfa-theme", selectedTheme);
 		router.push("/");
 	};
 
