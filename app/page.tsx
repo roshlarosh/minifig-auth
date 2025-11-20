@@ -97,10 +97,14 @@ export default function Home() {
 					<div className="mb-6">
 						<div className="flex justify-center mb-6">
 							<Image
-								src="/bannana-dance.gif"
+								src={
+									currentTheme === "star-wars"
+										? "/darth-v.gif"
+										: "/bannana-dance.gif"
+								}
 								alt="Success"
-								width={150}
-								height={150}
+								width={currentTheme === "star-wars" ? 250 : 150}
+								height={currentTheme === "star-wars" ? 250 : 150}
 								className=""
 								unoptimized
 							/>
@@ -110,8 +114,9 @@ export default function Home() {
 						</h1>
 						<div className="bg-yellow-100 border-l-4 border-yellow-500 p-4 rounded-lg mb-10">
 							<p className="text-gray-800 font-bold text-2xl leading-relaxed">
-								"Never share your real name, school, or location. Protect it
-								like rare loot from your pack."
+								{currentTheme === "star-wars"
+									? "Young one… protect your password as you would your lightsaber. Do not share it, not even with friends. For the Dark Side is always searching for easy targets."
+									: "Never share your real name, school, or location. Protect it like rare loot from your pack."}
 							</p>
 						</div>
 					</div>
